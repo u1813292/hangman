@@ -31,3 +31,6 @@ To run the game once in directory use the command
 If you still have python 2.7 installed and are having issues, try
 
 	python3 terminalHang.py
+
+For more information on how Random-word works please check out 
+	https://pypi.org/project/Random-Word/
