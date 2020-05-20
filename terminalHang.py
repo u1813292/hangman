@@ -1,3 +1,4 @@
+
 import sys
 from random_word import RandomWords
 
@@ -17,6 +18,134 @@ rem_guesses = 7
 reattempts = 1
 num_extra_guesses = 3
 
+# Input: an integer
+# Purpose: Print the state of the game board based on the number of guesses remaining
+# Return: none, just prints direct to stdout
+def get_image(guesses_left):
+	switcher = {
+		0:
+			  "|----------|\n"
+			+ "|          |\n"
+			+ "|         /-\ \n"
+			+ "|        /   \ \n"
+			+ "|        \   / \n"
+			+ "|         \_/ \n"
+			+ "|          | \n"
+			+ "|        --|-- \n"
+			+ "|       /  |  \ \n"
+			+ "|          | \n"
+			+ "|        /---\ \n"
+			+ "|       /     \ \n"
+			+ "|       \     / \n"
+			+ "|       _\   /_ \n"
+			+ "|\n"
+			+ "|",
+		1:
+			  "|----------| \n"
+			+ "|          | \n"
+			+ "|         /-\ \n"
+			+ "|        /   \ \n"
+			+ "|        \   / \n"
+			+ "|         \_/ \n"
+			+ "|          | \n"
+			+ "|        --|-- \n"
+			+ "|       /  |  \ \n"
+			+ "|          | \n"
+			+ "|        /---\ \n"
+			+ "|       / \n"
+			+ "|       \ \n"
+			+ "|       _\ \n"
+			+ "|\n"
+			+ "|",
+		2:
+			  "|----------|\n"
+			+ "|          |\n"
+			+ "|         /-\ \n"
+			+ "|        /   \ \n"
+			+ "|        \   / \n"
+			+ "|         \_/ \n"
+			+ "|          | \n"
+			+ "|        --|-- \n"
+			+ "|       /  |  \ \n"
+			+ "|          | \n"
+			+ "|        /---\ \n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|",
+		3:
+			  "|----------|\n"
+			+ "|          |\n"
+			+ "|         /-\ \n"
+			+ "|        /   \ \n"
+			+ "|        \   / \n"
+			+ "|         \_/ \n"
+			+ "|          | \n"
+			+ "|          | \n"
+			+ "|          | \n"
+			+ "|          | \n"
+			+ "|        /---\ \n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|",
+		4:
+			  "|----------|\n"
+			+ "|          | \n"
+			+ "|         /-\ \n"
+			+ "|        /   \ \n"
+			+ "|        \   / \n"
+			+ "|         \_/ \n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|",
+		5:
+			  "|----------|\n"
+			+ "|          |\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|",
+		6:
+			  "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|\n"
+			+ "|",
+		7:
+			""
+	}
+	print(switcher.get(guesses_left))
+
 # Input: a character
 # Purpose: Check if the character is a lowercase letter
 # Return: boolean, true if letter, false otherwise
@@ -31,6 +160,9 @@ print("Word: " + hidden_word)
 for line in sys.stdin:
 	if "exit" == line.strip(): sys.exit()
 	else:
+		print("--------------------------------------------\n"
+		    + "|           Current Game State             |\n"
+		    + "--------------------------------------------")
 		input_character = line.strip()
 		if check_if_letter(input_character):
 			if input_character in hidden_word:
@@ -46,19 +178,28 @@ for line in sys.stdin:
 					hidden_word = hidden_word[:index_of_input] + input_character + hidden_word[index_of_input+1:]
 					most_recent_finding = index_of_input + 1
 			else:
-				print("Incorrect letter \n{} guesses remaining".format(rem_guesses))
 				rem_guesses = rem_guesses - 1
+				print("Incorrect letter \n{} guesses remaining".format(rem_guesses))
 				incorrectly_guessed_letters.append(input_character)
-	if reattempts == 0:
+	if reattempts == 0 and rem_guesses == 0:
 		print("Failed!!\nYou loose, the word was {}".format(game_word))
+		get_image(rem_guesses)
+		sys.exit()
 	if rem_guesses ==  0:
 		print("Failed!!, we will give you {}  more guesses, good luck".format(num_extra_guesses))
 		print("...")
 		print("Remaining Guesses is now {}".format(num_extra_guesses))
 		rem_guesses = num_extra_guesses
+		get_image(rem_guesses)
 		reattempts = reattempts - 1
 	if "*" not in hidden_word:
 		print("Completed, you WIN!")
 		print("Please play again soon")
+		print("The word was {}".format(game_word))
+		get_image(rem_guesses)
 		sys.exit()
+
 	print("Word: " + hidden_word)
+	get_image(rem_guesses)
+	print("Incorrect guesses so far: " + str(incorrectly_guessed_letters))
+
