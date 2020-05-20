@@ -6,11 +6,11 @@ The only dependancies required for this terminal game are:
 
 To install random-word use 
 	
-	```pip install random-word```
+	pip install random-word
 
 if you have both python 2.7 and python 3 installed and are unable to run this, try:
 	
-	```pip3 install random-word```
+	pip3 install random-word
 
 # How the game works:
 
@@ -26,8 +26,8 @@ This does require python3! This should be known as python 2.7 is no longer suppo
 
 To run the game once in directory use the command 
 
-	```python terminalHang.py```
+	python terminalHang.py
 
 If you still have python 2.7 installed and are having issues, try
 
-	```python3 terminalHang.py```
+	python3 terminalHang.py
